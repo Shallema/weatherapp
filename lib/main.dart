@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:weather_flutter_demo_app/models.dart';
 import 'package:weather_flutter_demo_app/weather_service.dart';
 
-void main() {
-  runApp(MyApp());
-}
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -60,6 +58,9 @@ class _MyHomePageState extends State<MyHomePage> {
             Padding(
               padding: const EdgeInsets.all(24),
               child: TextField(
+                onChanged: (value) {setState(() {
+                  return value;
+                });},
                 controller: _cityTextController,
                 cursorColor: Colors.black,
                 decoration: InputDecoration(
@@ -74,8 +75,8 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             ElevatedButton(
-                onPressed: _search,
-                child: Text('Search'),
+              onPressed: _cityTextController.text.isNotEmpty ? _search : null,
+              child: Text('Search'),
             ),
           ],
         ),
