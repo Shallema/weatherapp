@@ -2,16 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:weather_flutter_demo_app/models.dart';
 import 'package:weather_flutter_demo_app/weather_service.dart';
 
-void main() {
-  runApp(MyApp());
-}
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.red,
         visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -52,15 +49,18 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: [
                   Image.network(_response.iconUrl),
                   Text(
-                    '${_response.tempInfo.temperature.round()}°',
+                    '${_response.mainEntity.temperature.round()}°',
                     style: TextStyle(fontSize: 40),
                   ),
-                  Text(_response.weatherInfo.description)
+                  Text(_response.weatherEntity.description)
                 ],
               ) : Image.network('https://media4.giphy.com/media/KnaVnAjfyoscdaH8SG/giphy.gif?cid=ecf05e47399xlsc0sblmdu6vbt0h7bymrp5ybz7p460evmtw&rid=giphy.gif&ct=g'),
             Padding(
               padding: const EdgeInsets.all(24),
               child: TextField(
+                onChanged: (value) {setState(() {
+                  return value;
+                });},
                 controller: _cityTextController,
                 cursorColor: Colors.black,
                 decoration: InputDecoration(
@@ -75,8 +75,8 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             ElevatedButton(
-                onPressed: _search,
-                child: Text('Search'),
+              onPressed: _cityTextController.text.isNotEmpty ? _search : null,
+              child: Text('Search'),
             ),
           ],
         ),

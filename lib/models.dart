@@ -24,14 +24,14 @@ class MainEntity {
 
 class WeatherResponse {
   final String cityName;
-  final MainEntity tempInfo;
-  final WeatherEntity weatherInfo;
+  final MainEntity mainEntity;
+  final WeatherEntity weatherEntity;
 
   String get iconUrl {
-    return 'https://openweathermap.org/img/wn/${weatherInfo.icon}@2x.png';
+    return 'https://openweathermap.org/img/wn/${weatherEntity.icon}@2x.png';
   }
 
-  WeatherResponse({this.cityName, this.tempInfo, this.weatherInfo});
+  WeatherResponse({this.cityName, this.mainEntity, this.weatherEntity});
 
   factory WeatherResponse.fromJson(Map<String, dynamic> json) {
     final cityName = json['name'];
@@ -43,6 +43,6 @@ class WeatherResponse {
     final weatherInfo = WeatherEntity.fromJson(weatherInfoJson);
 
     return WeatherResponse(
-        cityName: cityName, tempInfo: tempInfo, weatherInfo: weatherInfo);
+        cityName: cityName, mainEntity: tempInfo, weatherEntity: weatherInfo);
   }
 }
