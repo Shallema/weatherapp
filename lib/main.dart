@@ -44,17 +44,24 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            _response != null ?
               Column(
                 children: [
-                  Image.network(_response.iconUrl),
-                  Text(
-                    '${_response.mainEntity.temperature.round()}°',
-                    style: TextStyle(fontSize: 40),
+                  _response != null && _cityTextController.text.isNotEmpty ?
+                  Column(
+                    children: [
+                      Image.network(_response.iconUrl),
+                      Text(
+                        '${_response.mainEntity.temperature.round()}°',
+                        style: TextStyle(fontSize: 40),
+                      ),
+                      Text(_response.weatherEntity.description)
+                    ],
+                  ) : Padding(
+                    padding: const EdgeInsets.all(24),
+                    child: Image.network('https://media4.giphy.com/media/KnaVnAjfyoscdaH8SG/giphy.gif?cid=ecf05e47399xlsc0sblmdu6vbt0h7bymrp5ybz7p460evmtw&rid=giphy.gif&ct=g'),
                   ),
-                  Text(_response.weatherEntity.description)
                 ],
-              ) : Image.network('https://media4.giphy.com/media/KnaVnAjfyoscdaH8SG/giphy.gif?cid=ecf05e47399xlsc0sblmdu6vbt0h7bymrp5ybz7p460evmtw&rid=giphy.gif&ct=g'),
+              ),
             Padding(
               padding: const EdgeInsets.all(24),
               child: TextField(
@@ -70,7 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.black)
                   ),
-                  hintText: 'City',
+                  hintText: 'Entrez le nom dune ville',
                 ),
               ),
             ),
@@ -88,5 +95,4 @@ class _MyHomePageState extends State<MyHomePage> {
     final response = await _weatherService.getWeather(_cityTextController.text);
     setState(() => _response = response);
   }
-
 }
